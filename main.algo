@@ -1,0 +1,62 @@
+
+BiT : STRUCT
+	        VAL : INTEGER; 
+	        LC : ^BiT; //  left child
+	        RC : ^BiT; //  right child
+	    END_STRUCT
+	// number of nodes in the tree
+	FUNCTION numb_nodes(root : ^BiT) : INTEGER
+	BEGIN
+	    IF (root = NULL) THEN
+	        RETURN 0;
+	    ELSE
+	        RETURN 1 + numb_nodes(root^.LC) + numb_nodes(root^.RC);
+	    END_IF
+	END
+
+// the height of the tree
+	FUNCTION max(a,b : INTEGER) : INTEGER
+	BEGIN
+	    IF (a < b) THEN
+	        RETURN b;
+	    ELSE
+	        RETURN a;
+	    END_IF
+	END
+	
+
+	FUNCTION height(root : ^BiT) : INTEGER
+	BEGIN
+	    IF (root = NULL) THEN
+	        RETURN 0;
+	    ELSE
+	        RETURN 1 + max(height(root^.LC),height(root^.RC));
+	    END_IF
+	END
+
+// the number of leaves in the tree
+	FUNCTION numb_leaves(root : ^BiT) : INTEGER
+	BEGIN
+	    IF (root = NULL) THEN
+	        RETURN 0;
+	    ELSE_IF(root^.LC = NULL AND root^.RC = NULL)
+	        RETURN 1;
+	    ELSE
+	        RETURN  numb_leaves(root^.LC) + numb_leaves(root^.RC);
+	    END_IF
+	END
+
+// is the tree full binary tree
+FUNCTION full_BiT(root : ^BT) : BOOLEAN
+BEGIN
+    IF (root <> NULL) THEN
+        IF (root^.LC = NULL AND root^.RC = NULL) THEN
+            RETURN TRUE;
+        ELSE_IF (root^.LC <> NULL AND root^.RC <> NULL) THEN
+            RETURN full_BiT(root^.LC) AND full_BiT(root^.RC);
+        ELSE
+            RETURN FALSE;
+        END_IF
+    END_IF
+END
+
